@@ -10,7 +10,7 @@
   "override": {
     "build": [
       "find ./ -exec touch -t 200905010101 {} +",
-      "./configure --prefix=#{self.install} --without-ensurepip",
+      "./configure #{os == 'windows' ? '--host x86_64-w64-mingw32': ''} --prefix=#{self.install} --without-ensurepip",
       "make"
     ],
     "install": [
