@@ -10,11 +10,10 @@
   "override": {
     "build": [
       "find ./ -exec touch -t 200905010101 {} +",
-      "./configure #{os == 'windows' ? '--host x86_64-w64-mingw32': ''} --prefix=#{self.install} --without-ensurepip",
-      "make"
+      "#{os == 'windows' ? './PCbuild/build.bat -e -p x64 -c Release': './build-unix.sh'}"
     ],
     "install": [
-      "make install"
+      "#{os == 'windows' ? './install-windows.sh': 'make install'}"
     ],
     "buildsInSource": true,
     "exportedEnv": {
