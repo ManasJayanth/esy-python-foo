@@ -1,0 +1,35 @@
+{
+  "name": "postgresql",
+  "version": "9.6.16",
+  "description": "PostgreSQL packaged for Esy",
+  "license": "PostgreSQL Licence",
+  "source": "https://www.python.org/ftp/python/3.8.6/Python-3.8.6.tar.xz#sha256:a9e0b79d27aa056eb9cce8d63a427b5f9bab1465dee3f942dcfdb25a82f4ab8a",
+  "override": {
+    "buildEnv": {
+      "CFLAGS": "-I#{esy-openssl.install / 'include'} $CFLAGS",
+      "LDFLAGS": "-L#{esy-openssl.lib} -lcrypto $LDFLAGS"
+    },
+    "build": [
+      "find ./ -exec touch -t 200905010101 {} +",
+      "#{os == 'windows' ? './PCbuild/build.bat -e -p x64 -c Release' : './build-unix.sh' }"
+    ],
+    "install": [
+      "#{os == 'windows' ? './install-windows.sh': 'make install' }"
+    ],
+    "buildsInSource": true,
+    "exportedEnv": {
+      "PYTHONHOME": {
+        "scope": "global",
+        "val": "#{self.lib / 'python3.8'}"
+      },
+      "PYTHONPATH": {
+        "scope": "global",
+        "val": "#{self.lib / 'python3.8'}"
+      }
+    },
+    "dependencies": {
+      "esy-libffi": "esy-ocaml/libffi#599bc3567ecf839240977b6d9aaf0b80f983b5aa",
+      "esy-zlib": "esy-packages/esy-zlib"
+    }
+  }
+}
