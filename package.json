@@ -10,7 +10,7 @@
   "override": {
     "build": [
       "find ./ -exec touch -t 200905010101 {} +",
-      "#{os == 'windows' ? './PCbuild/build.bat -e -p x64 -c Release': './build-unix.sh'}"
+      "#{os == 'windows' ? './PCbuild/build.bat -e -p x64 -c Release': 'sh ./build-unix.sh'}"
     ],
     "install": [
       "#{os == 'windows' ? './install-windows.sh': 'make install'}"
